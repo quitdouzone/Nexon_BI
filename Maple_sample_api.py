@@ -1,5 +1,10 @@
 import requests, json
-header = {"Authorization":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJYLUFwcC1SYXRlLUxpbWl0IjoiNTAwOjEwIiwiYWNjb3VudF9pZCI6IjEzOTI1ODI5ODEiLCJhdXRoX2lkIjoiMiIsImV4cCI6MTY4OTg5MzQ2MSwiaWF0IjoxNjc0MzQxNDYxLCJuYmYiOjE2NzQzNDE0NjEsInNlcnZpY2VfaWQiOiI0MzAwMTEzOTciLCJ0b2tlbl90eXBlIjoiQWNjZXNzVG9rZW4ifQ.7h1xoegE8xHK7TJjcgXRxs9ZS08Vtr6EBDXBuxJ-7tY"}
+
+with open("./resource/API_key.json", 'rt') as fp1:
+    value_result = fp1.read()
+
+auth_key = json.loads(value_result).get('Authorization', {})
+header = {"Authorization":auth_key}
 count = 1000
 date = "2023-05-02"
 
