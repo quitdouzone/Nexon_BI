@@ -49,15 +49,14 @@ def inquery(api_key, count, date, cursor):
             cube_history_column_list_options, cube_history_val_list_options = parse_history(inquery_result)
 
             history_column_list_temp = cube_history_column_list_info + cube_history_column_list_options
-            history_column_list.append(history_column_list_temp)
             history_val_list_temp = cube_history_val_list_info + cube_history_val_list_options
-            history_val_list.append(history_val_list_temp)
 
-            history_dict = { x:y for x,y in zip(history_column_list[i], history_val_list[i])}
+            history_dict = dict(zip(history_column_list_temp, history_val_list_temp))
 
             history_df = pd.DataFrame([history_dict])
 
             result_df = pd.concat([result_df, history_df], ignore_index=True)
+
 
     return result_df
 def parse_history(inquery_result):
