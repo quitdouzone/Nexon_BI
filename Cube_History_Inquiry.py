@@ -127,13 +127,14 @@ def main():
     result_df = pd.DataFrame()
     inquery_df = pd.DataFrame()
 
-    file_path = f"./resource/{start_date}_{end_date}_{count}.csv"
+    csv_path = f"./resource/{start_date}_{end_date}_{count}.csv"
+    parquet_path = f"./resource/{start_date}_{end_date}_{count}.parquet"
 
     for cube_date in date:
         inquery_df = pd.concat([inquery_df, inquery(api_key, count, cube_date, cursor, result_df)], ignore_index=True)
 
-    inquery_df.to_csv(file_path, sep='|', na_rep='NaN', index=False)
-
+    inquery_df.to_csv(csv_path, sep='|', na_rep='NaN', index=False)
+    inquery_df.to_parquet(parquet_path, index=False)
 
 
 if __name__ == '__main__':
