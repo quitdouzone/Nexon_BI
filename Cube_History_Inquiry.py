@@ -39,23 +39,23 @@ def inquery(api_key, count, date, cursor):
         data_dict = json.loads(result.text)
 
         cube_histories = data_dict.get("cube_histories")
-
-        for i in range(len(cube_histories)):
-            inquery_result = data_dict.get("cube_histories")[i]
-
-            cube_history_val_list_info = []
-            for key in cube_history_column_list_info:
-                cube_history_val_list_info.append(inquery_result.get(key))
-            cube_history_column_list_options, cube_history_val_list_options = parse_history(inquery_result)
-
-            history_column_list_temp = cube_history_column_list_info + cube_history_column_list_options
-            history_val_list_temp = cube_history_val_list_info + cube_history_val_list_options
-
-            history_dict = dict(zip(history_column_list_temp, history_val_list_temp))
-
-            history_df = pd.DataFrame([history_dict])
-
-            result_df = pd.concat([result_df, history_df], ignore_index=True)
+        print(cube_date, len(cube_histories))
+        # for i in range(len(cube_histories)):
+        #     inquery_result = data_dict.get("cube_histories")[i]
+        #
+        #     cube_history_val_list_info = []
+        #     for key in cube_history_column_list_info:
+        #         cube_history_val_list_info.append(inquery_result.get(key))
+        #     cube_history_column_list_options, cube_history_val_list_options = parse_history(inquery_result)
+        #
+        #     history_column_list_temp = cube_history_column_list_info + cube_history_column_list_options
+        #     history_val_list_temp = cube_history_val_list_info + cube_history_val_list_options
+        #
+        #     history_dict = dict(zip(history_column_list_temp, history_val_list_temp))
+        #
+        #     history_df = pd.DataFrame([history_dict])
+        #
+        #     result_df = pd.concat([result_df, history_df], ignore_index=True)
 
 
     return result_df
