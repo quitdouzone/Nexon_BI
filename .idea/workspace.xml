@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="96164fa9-c47e-4477-8cf2-c5f49c7e50ad" name="Default Changelist" comment="1000개 이상 조회 가능" />
+    <list default="true" id="96164fa9-c47e-4477-8cf2-c5f49c7e50ad" name="Default Changelist" comment="parquet 파일 생성 추가">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -132,7 +134,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684929031468</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="parquet 파일 생성 추가">
+      <created>1684931911433</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1684931911433</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -142,7 +151,8 @@
     <MESSAGE value="개인 큐브 사용 내역 조회 기능&#10;- parameter(api_key, count, date)&#10;- 조회 결과 csv 생성 (sep='|')" />
     <MESSAGE value="csv 생성 시 로직 수정" />
     <MESSAGE value="1000개 이상 조회 가능" />
-    <option name="LAST_COMMIT_MESSAGE" value="1000개 이상 조회 가능" />
+    <MESSAGE value="parquet 파일 생성 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="parquet 파일 생성 추가" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Maplestroy_API$Maple_sample_api.coverage" NAME="Maple_sample_api Coverage Results" MODIFIED="1683185153581" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

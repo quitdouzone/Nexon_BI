@@ -133,6 +133,7 @@ def main():
     for cube_date in date:
         inquery_df = pd.concat([inquery_df, inquery(api_key, count, cube_date, cursor, result_df)], ignore_index=True)
 
+    inquery_df['create_date'] = pd.to_datetime(inquery_df['create_date'])
     inquery_df.to_csv(csv_path, sep='|', na_rep='NaN', index=False)
     inquery_df.to_parquet(parquet_path, index=False)
 
