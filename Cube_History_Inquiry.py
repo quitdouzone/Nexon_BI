@@ -27,38 +27,40 @@ def date_range(start, end):
     return dates
 
 # 큐브 사용 내역 조회 * date, cursor 중 하나만 입력 가능
-def inquery(api_key, count, date, cursor):
+def inquery(api_key, count, date, cursor, result_df):
 
-    history_column_list = []
-    history_val_list = []
-    result_df = pd.DataFrame()
+    if cursor == "":
+        url = f"https://public.api.nexon.com/openapi/maplestory/v1/cube-use-results?count={count}&date={date}"
+    else :
+        url = f"https://public.api.nexon.com/openapi/maplestory/v1/cube-use-results?count={count}&cursor={cursor}"
+    result = requests.get(url, headers=api_key)
+    data_dict = json.loads(result.text)
 
-    for cube_date in date:
-        url = f"https://public.api.nexon.com/openapi/maplestory/v1/cube-use-results?count={count}&date={cube_date}"#&cursor={cursor}"
-        result = requests.get(url, headers=api_key)
-        data_dict = json.loads(result.text)
+    cube_histories = data_dict.get("cube_histories")
+    next_cursor = data_dict.get("next_cursor")
 
-        cube_histories = data_dict.get("cube_histories")
+    for i in range(len(cube_histories)):
+        inquery_result = data_dict.get("cube_histories")[i]
 
-        for i in range(len(cube_histories)):
-            inquery_result = data_dict.get("cube_histories")[i]
+        cube_history_val_list_info = []
+        for key in cube_history_column_list_info:
+            cube_history_val_list_info.append(inquery_result.get(key))
+        cube_history_column_list_options, cube_history_val_list_options = parse_history(inquery_result)
 
-            cube_history_val_list_info = []
-            for key in cube_history_column_list_info:
-                cube_history_val_list_info.append(inquery_result.get(key))
-            cube_history_column_list_options, cube_history_val_list_options = parse_history(inquery_result)
+        history_column_list_temp = cube_history_column_list_info + cube_history_column_list_options
+        history_val_list_temp = cube_history_val_list_info + cube_history_val_list_options
+        history_dict = dict(zip(history_column_list_temp, history_val_list_temp))
 
-            history_column_list_temp = cube_history_column_list_info + cube_history_column_list_options
-            history_val_list_temp = cube_history_val_list_info + cube_history_val_list_options
+        history_df = pd.DataFrame([history_dict])
 
-            history_dict = dict(zip(history_column_list_temp, history_val_list_temp))
+        result_df = pd.concat([result_df, history_df], ignore_index=True)
 
-            history_df = pd.DataFrame([history_dict])
+    if next_cursor == "":
+        return result_df
 
-            result_df = pd.concat([result_df, history_df], ignore_index=True)
+    return inquery(api_key, count, date, next_cursor, result_df)
 
 
-    return result_df
 def parse_history(inquery_result):
     history = inquery_result
 
@@ -121,9 +123,18 @@ def main():
     end_date = input("종료 날짜(YYYY-MM-DD): ") #조회하고자 하는 종료일
 
     date = date_range(start_date, end_date)
-    cursor = 0
+    cursor = ""
+    result_df = pd.DataFrame()
+    inquery_df = pd.DataFrame()
+
     file_path = f"./resource/{start_date}_{end_date}_{count}.csv"
-    inquery(api_key, count, date, cursor).to_csv(file_path, sep='|', na_rep='NaN', index=False)
+
+    for cube_date in date:
+        inquery_df = pd.concat([inquery_df, inquery(api_key, count, cube_date, cursor, result_df)], ignore_index=True)
+
+    inquery_df.to_csv(file_path, sep='|', na_rep='NaN', index=False)
+
+
 
 if __name__ == '__main__':
     main()
