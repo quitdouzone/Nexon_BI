@@ -1,4 +1,4 @@
-# Maplestroy_API
+# Nexon_BI
 
 ## 데이터 수집계획
 ![image](https://github.com/quitdouzone/Maplestroy_API/assets/132464866/36a2c976-86f1-437b-9ce5-534657d9adea)
