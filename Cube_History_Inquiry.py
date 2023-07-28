@@ -1,3 +1,20 @@
+from airflow.models import DAG
+from airflow.utils.dates import days_ago
+from airflow.operators.python_operator import PythonOperator
+from airflow.operators.dummy import DummyOperator
+import time
+
+args = {'owner': 'baebae',
+        'start_date': days_ago(n=1)}
+
+dag = DAG(dag_id='cube_history_inquiry',
+          default_args=args,
+          schedule_interval='@daily')
+
+start = DummyOperator(task_id="start", dag=dag)
+end = DummyOperator(task_id="end", dag=dag)
+
+
 import requests, json
 import pandas as pd
 from datetime import timedelta, datetime
@@ -118,9 +135,12 @@ def main():
         value_result = fp1.read()
     auth_key = json.loads(value_result).get('Authorization', {})
     api_key = {"Authorization": auth_key}
-    count = input("횟수(10 ~ 1000): ") #조회하고자 하는 횟수
-    start_date = input("시작 날짜(YYYY-MM-DD): ") #조회하고자 하는 시작일
-    end_date = input("종료 날짜(YYYY-MM-DD): ") #조회하고자 하는 종료일
+    # count = input("횟수(10 ~ 1000): ") #조회하고자 하는 횟수
+    # start_date = input("시작 날짜(YYYY-MM-DD): ") #조회하고자 하는 시작일
+    # end_date = input("종료 날짜(YYYY-MM-DD): ") #조회하고자 하는 종료일
+    count = 1000
+    start_date = '2023-07-27'
+    end_date = '2023-07-28'
 
     date = date_range(start_date, end_date)
     cursor = ""
@@ -137,7 +157,8 @@ def main():
     inquery_df.to_csv(csv_path, sep='|', na_rep='NaN', index=False)
     inquery_df.to_parquet(parquet_path, index=False)
 
+t1 = PythonOperator(task_id='main',
+                    python_callable=main,
+                    dag=dag)
 
-if __name__ == '__main__':
-    main()
-
+start >> t1 >> end
