@@ -3,6 +3,9 @@
 ## 데이터 수집계획
 ![image](https://github.com/quitdouzone/Maplestroy_API/assets/132464866/36a2c976-86f1-437b-9ce5-534657d9adea)
 
+## Nexon_BI >> MPI(Maple Personal Intelligence)
+
+UI 기획서(초안) : https://www.notion.so/UI-e61bd59aeef44725b0d8e2bf86ff1c0d?pvs=4
 
 ## 프로젝트 관리 및 위키 정리
 
